@@ -1,6 +1,7 @@
 export interface CategoryData {
   beginner: number;
   growth: number;
+  learner?: number;
   expert: number;
 }
 

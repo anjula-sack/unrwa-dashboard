@@ -129,6 +129,23 @@ export default function Dashboard() {
     return aggregated;
   };
 
+  // Helper function to normalize level distribution (handle both growth and learner)
+  const normalizeLevels = (
+    dist: any
+  ): { beginner: number; growth: number; expert: number } => {
+    if (!dist) return defaultLevels;
+    return {
+      beginner: dist.beginner || 0,
+      growth:
+        dist.growth !== undefined
+          ? dist.growth
+          : dist.learner !== undefined
+          ? dist.learner
+          : 0,
+      expert: dist.expert || 0,
+    };
+  };
+
   useEffect(() => {
     const fetchAssessmentData = async () => {
       setLoading(true);
@@ -194,17 +211,19 @@ export default function Dashboard() {
         if (preData) {
           const distributions = preData.category_level_distributions;
           setPreTestData({
-            overall: preData.overall_level_distribution || defaultLevels,
-            selfAwareness: distributions?.self_awareness || defaultLevels,
-            selfManagement: distributions?.social_management || defaultLevels,
-            socialAwareness: distributions?.social_awareness || defaultLevels,
-            relationshipSkills:
-              distributions?.relationship_skills || defaultLevels,
-            responsibleDecisionMaking:
-              distributions?.responsible_decision_making || defaultLevels,
-            metacognition: distributions?.metacognition || defaultLevels,
-            empathy: distributions?.empathy || defaultLevels,
-            criticalThinking: distributions?.critical_thinking || defaultLevels,
+            overall: normalizeLevels(preData.overall_level_distribution),
+            selfAwareness: normalizeLevels(distributions?.self_awareness),
+            selfManagement: normalizeLevels(distributions?.social_management),
+            socialAwareness: normalizeLevels(distributions?.social_awareness),
+            relationshipSkills: normalizeLevels(
+              distributions?.relationship_skills
+            ),
+            responsibleDecisionMaking: normalizeLevels(
+              distributions?.responsible_decision_making
+            ),
+            metacognition: normalizeLevels(distributions?.metacognition),
+            empathy: normalizeLevels(distributions?.empathy),
+            criticalThinking: normalizeLevels(distributions?.critical_thinking),
             totalStudents: preData.total_students || 0,
           });
           setStudentEntries((prev) => ({
@@ -216,17 +235,19 @@ export default function Dashboard() {
         if (postData) {
           const distributions = postData.category_level_distributions;
           setPostTestData({
-            overall: postData.overall_level_distribution || defaultLevels,
-            selfManagement: distributions?.social_management || defaultLevels,
-            socialAwareness: distributions?.social_awareness || defaultLevels,
-            relationshipSkills:
-              distributions?.relationship_skills || defaultLevels,
-            responsibleDecisionMaking:
-              distributions?.responsible_decision_making || defaultLevels,
-            metacognition: distributions?.metacognition || defaultLevels,
-            empathy: distributions?.empathy || defaultLevels,
-            criticalThinking: distributions?.critical_thinking || defaultLevels,
-            selfAwareness: distributions?.self_awareness || defaultLevels,
+            overall: normalizeLevels(postData.overall_level_distribution),
+            selfManagement: normalizeLevels(distributions?.social_management),
+            socialAwareness: normalizeLevels(distributions?.social_awareness),
+            relationshipSkills: normalizeLevels(
+              distributions?.relationship_skills
+            ),
+            responsibleDecisionMaking: normalizeLevels(
+              distributions?.responsible_decision_making
+            ),
+            metacognition: normalizeLevels(distributions?.metacognition),
+            empathy: normalizeLevels(distributions?.empathy),
+            criticalThinking: normalizeLevels(distributions?.critical_thinking),
+            selfAwareness: normalizeLevels(distributions?.self_awareness),
             totalStudents: postData.total_students || 0,
           });
           setStudentEntries((prev) => ({
@@ -948,7 +969,7 @@ export default function Dashboard() {
                             />
                             <CategoryCircle
                               category="learner"
-                              count={criticalThinkingData.growth}
+                              count={criticalThinkingData.growth || criticalThinkingData.learner}
                               size="md"
                             />
                             <CategoryCircle

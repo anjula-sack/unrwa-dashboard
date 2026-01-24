@@ -103,6 +103,34 @@ export default function TeacherSurveyBarChart({
               wrapperStyle={{
                 paddingBottom: "20px",
               }}
+              content={({ payload }) => {
+                if (!payload || payload.length === 0) return null;
+                // Reverse the payload order to show Pre test first, then Post test
+                const reversedPayload = [...payload].reverse();
+                return (
+                  <ul className="flex justify-center items-center gap-4">
+                    {reversedPayload.map((entry, index) => (
+                      <li
+                        key={`item-${index}`}
+                        className="flex items-center gap-2"
+                      >
+                        <span
+                          style={{
+                            display: "inline-block",
+                            width: "14px",
+                            height: "14px",
+                            backgroundColor: entry.color,
+                            borderRadius: "2px",
+                          }}
+                        />
+                        <span style={{ color: entry.color }}>
+                          {entry.value}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }}
             />
             <Bar
               dataKey="Pre test"

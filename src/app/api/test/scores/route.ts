@@ -23,13 +23,13 @@ export async function GET() {
       testType: "PRE",
       overall_level_distribution: {
         beginner: 8,
-        growth: 12,
+        learner: 12,
         expert: 5,
       },
       category_level_distributions: {
         self_awareness: {
           beginner: 5,
-          growth: 15,
+          learner: 15,
           expert: 5,
         },
         social_management: {
@@ -39,7 +39,7 @@ export async function GET() {
         },
         social_awareness: {
           beginner: 7,
-          growth: 13,
+          learner: 13,
           expert: 5,
         },
         relationship_skills: {
@@ -49,7 +49,7 @@ export async function GET() {
         },
         responsible_decision_making: {
           beginner: 6,
-          growth: 14,
+          learner: 14,
           expert: 5,
         },
         metacognition: {
@@ -59,7 +59,7 @@ export async function GET() {
         },
         empathy: {
           beginner: 5,
-          growth: 15,
+          learner: 15,
           expert: 5,
         },
         critical_thinking: {

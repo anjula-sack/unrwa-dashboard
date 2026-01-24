@@ -1,6 +1,7 @@
 export interface LevelDistribution {
   beginner: number;
   growth: number;
+  learner?: number;
   expert: number;
 }
 
